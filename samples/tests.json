@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Firmware version supports current validation plan",
+    "kind": "firmware_min_version",
+    "subsystem": "firmware",
+    "requirement": "FW-001",
+    "expected": "1.4.0",
+    "triage": "Update firmware before running full regression."
+  },
+  {
+    "name": "PCIe link trains to x4",
+    "kind": "register_equals",
+    "subsystem": "pcie",
+    "requirement": "PCIE-010",
+    "register": "PCIE_LINK_WIDTH",
+    "expected": "x4",
+    "triage": "Check board lane configuration and retimer logs."
+  },
+  {
+    "name": "NVMe controller ready bit is set",
+    "kind": "register_equals",
+    "subsystem": "nvme",
+    "requirement": "NVME-002",
+    "register": "NVME_READY",
+    "expected": "0x01",
+    "triage": "Collect controller initialization trace."
+  },
+  {
+    "name": "Read latency p99 below target",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERF-101",
+    "metric": "read_latency_us_p99",
+    "expected": 900,
+    "triage": "Inspect queue depth, garbage collection, and firmware throttling."
+  },
+  {
+    "name": "Write latency p99 below target",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERF-102",
+    "metric": "write_latency_us_p99",
+    "expected": 1100,
+    "triage": "Review NAND program latency and write cache behavior."
+  },
+  {
+    "name": "Peak thermal stays inside validation envelope",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERM-004",
+    "metric": "thermal_celsius_peak",
+    "expected": 75,
+    "triage": "Check fan curve and workload duty cycle."
+  },
+  {
+    "name": "Error log page is available",
+    "kind": "feature_enabled",
+    "subsystem": "diagnostics",
+    "requirement": "DIAG-020",
+    "feature": "error_log_page",
+    "triage": "Enable diagnostic feature flag and rerun firmware smoke test."
+  }
+]

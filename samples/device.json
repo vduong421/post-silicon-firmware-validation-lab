@@ -1,0 +1,24 @@
+{
+  "device_id": "ssd-eval-board-a3",
+  "firmware": {
+    "version": "1.4.2"
+  },
+  "registers": {
+    "BOOT_STATUS": "0x01",
+    "PCIE_LINK_WIDTH": "x4",
+    "THERMAL_STATE": "nominal",
+    "NVME_READY": "0x01"
+  },
+  "features": {
+    "smart_health": true,
+    "error_log_page": true,
+    "power_state_transition": false
+  },
+  "metrics": {
+    "read_latency_us_p99": 820,
+    "write_latency_us_p99": 1250,
+    "thermal_celsius_peak": 71,
+    "io_error_rate_ppm": 3,
+    "sustained_iops": 94000
+  }
+}
