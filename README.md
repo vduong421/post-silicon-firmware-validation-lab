@@ -2,6 +2,10 @@
 
 Post-Silicon Firmware Validation Lab is a local validation tool for reviewing firmware readiness, register checks, subsystem state, and SSD/NVMe validation signals.
 
+## Product Screenshot
+
+![Product screenshot](assets/product-screenshot.png)
+
 It uses deterministic validation checks as the source of truth and adds a local AI validation copilot to explain release risk and next debug steps.
 
 ## What It Does
