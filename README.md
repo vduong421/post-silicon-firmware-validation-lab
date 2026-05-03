@@ -1,45 +1,57 @@
-﻿# Post-Silicon Firmware Validation Lab
+# Post-Silicon Firmware Validation Lab
 
-Role fit: firmware validation, post-silicon validation, hardware test, embedded test automation, SSD/NVMe validation, and computer engineering roles.
+Post-Silicon Firmware Validation Lab is a local validation tool for reviewing firmware readiness, register checks, subsystem state, and SSD/NVMe validation signals.
 
-This project simulates a small hardware validation workflow: register checks, firmware version checks, IO stress cases, latency thresholds, failure signatures, and requirement coverage. It is intentionally lightweight, but the structure mirrors what validation teams care about: reproducible tests, clear pass/fail criteria, triage notes, and machine-readable reports.
+It uses deterministic validation checks as the source of truth and adds a local AI validation copilot to explain release risk and next debug steps.
 
-## Features
+## What It Does
 
-- Loads device and test definitions from JSON.
-- Runs firmware, register, IO, thermal, and latency validation checks.
-- Produces JSON and Markdown reports for engineering review.
-- Groups failures by subsystem and requirement ID.
-- Includes sample device data and validation cases.
+- Loads firmware and validation sample data.
+- Checks subsystem readiness, register-level signals, and validation status.
+- Produces a structured validation summary.
+- Displays readiness and risk in a browser UI.
+- Provides AI analyst and chat-style validation guidance.
+
+## AI Features
+
+- Local AI validation copilot explains readiness risk.
+- AI recommendations reference deterministic validation evidence.
+- Helps convert low-level validation signals into operator-ready next steps.
+- Browser UI shows validation state and AI analyst output.
+
+## Architecture
+
+```text
+Firmware validation data
+        |
+        v
+Validation checks -> readiness summary -> risk notes
+        |
+        v
+Local AI validation copilot -> explanation + next debug action
+        |
+        v
+Browser dashboard
+```
 
 ## Run
 
-```bash
-python app.py --device samples/device.json --tests samples/tests.json --out report
-```
-
-Outputs:
-
-- `report.json`
-- `report.md`
-
-## Engineering Impact
-- Built a Python firmware validation workflow that checks simulated device registers, firmware versions, IO paths, latency limits, thermal limits, and requirement coverage.
-- Designed JSON-driven validation cases with pass/fail criteria and generated engineering-ready JSON and Markdown reports.
-- Implemented failure triage by subsystem and requirement ID to mirror post-silicon and hardware validation review workflows.
-
-## Project Workbench
-
-Launch the production-style desktop workbench with:
-
 ```powershell
-launch-workbench.bat
+run.bat
 ```
 
-What it adds:
+## Local AI Setup
 
-- Local-first AI copilot using `google/gemma-4-e4b` by default
-- Operator-focused workbench for reviewing real project inputs and outputs
-- System design, production-impact, and operational brief generation on demand
-- Grounded responses based on this project's README, sample files, and deterministic outputs
+Use a local OpenAI-compatible model server such as LM Studio. A small model such as `google/gemma-4-e4b` is enough for the analyst layer.
 
+Core validation checks run without AI.
+
+## Main Files
+
+- `app.py` - validation dashboard and AI analyst UI.
+- `agents/Agent.md` - post-silicon validation copilot instructions.
+- `samples/` - validation data.
+
+## Output
+
+The app shows firmware readiness, validation risk, subsystem notes, and AI-generated release or debug guidance.
