@@ -1,63 +1,1801 @@
 [
   {
-    "name": "Firmware version supports current validation plan",
+    "name": "Firmware version supports validation plan",
     "kind": "firmware_min_version",
     "subsystem": "firmware",
     "requirement": "FW-001",
     "expected": "1.4.0",
-    "triage": "Update firmware before running full regression."
+    "triage": "Update firmware before full regression."
   },
   {
     "name": "PCIe link trains to x4",
     "kind": "register_equals",
     "subsystem": "pcie",
     "requirement": "PCIE-010",
-    "register": "PCIE_LINK_WIDTH",
     "expected": "x4",
-    "triage": "Check board lane configuration and retimer logs."
+    "triage": "Check lane config and retimer logs.",
+    "register": "PCIE_LINK_WIDTH"
   },
   {
     "name": "NVMe controller ready bit is set",
     "kind": "register_equals",
     "subsystem": "nvme",
     "requirement": "NVME-002",
-    "register": "NVME_READY",
     "expected": "0x01",
-    "triage": "Collect controller initialization trace."
+    "triage": "Collect controller initialization trace.",
+    "register": "NVME_READY"
   },
   {
     "name": "Read latency p99 below target",
     "kind": "metric_max",
     "subsystem": "performance",
     "requirement": "PERF-101",
-    "metric": "read_latency_us_p99",
     "expected": 900,
-    "triage": "Inspect queue depth, garbage collection, and firmware throttling."
+    "triage": "Inspect queue depth and firmware throttling.",
+    "metric": "read_latency_us_p99"
   },
   {
     "name": "Write latency p99 below target",
     "kind": "metric_max",
     "subsystem": "performance",
     "requirement": "PERF-102",
-    "metric": "write_latency_us_p99",
     "expected": 1100,
-    "triage": "Review NAND program latency and write cache behavior."
+    "triage": "Review NAND program latency and write cache behavior.",
+    "metric": "write_latency_us_p99"
   },
   {
-    "name": "Peak thermal stays inside validation envelope",
+    "name": "Peak thermal inside envelope",
     "kind": "metric_max",
     "subsystem": "thermal",
     "requirement": "THERM-004",
-    "metric": "thermal_celsius_peak",
     "expected": 75,
-    "triage": "Check fan curve and workload duty cycle."
+    "triage": "Check fan curve and workload duty cycle.",
+    "metric": "thermal_celsius_peak"
   },
   {
-    "name": "Error log page is available",
+    "name": "Error log page available",
     "kind": "feature_enabled",
     "subsystem": "diagnostics",
     "requirement": "DIAG-020",
-    "feature": "error_log_page",
-    "triage": "Enable diagnostic feature flag and rerun firmware smoke test."
+    "expected": null,
+    "triage": "Enable diagnostic feature flag and rerun smoke test.",
+    "feature": "error_log_page"
+  },
+  {
+    "name": "FIRMWARE validation case 008",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-108",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 008."
+  },
+  {
+    "name": "PCIE validation case 009",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-109",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 009."
+  },
+  {
+    "name": "PCIE validation case 010",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-110",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 010."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 011",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-111",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 011."
+  },
+  {
+    "name": "THERMAL validation case 012",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-112",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 012."
+  },
+  {
+    "name": "FIRMWARE validation case 013",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-113",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 013."
+  },
+  {
+    "name": "FIRMWARE validation case 014",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-114",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 014."
+  },
+  {
+    "name": "PCIE validation case 015",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-115",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 015."
+  },
+  {
+    "name": "THERMAL validation case 016",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-116",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 016."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 017",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-117",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 017."
+  },
+  {
+    "name": "PCIE validation case 018",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-118",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 018."
+  },
+  {
+    "name": "THERMAL validation case 019",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-119",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 019."
+  },
+  {
+    "name": "POWER validation case 020",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-120",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 020."
+  },
+  {
+    "name": "POWER validation case 021",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-121",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 021."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 022",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-122",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 022."
+  },
+  {
+    "name": "NVME validation case 023",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-123",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 023."
+  },
+  {
+    "name": "PCIE validation case 024",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-124",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 024."
+  },
+  {
+    "name": "POWER validation case 025",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-125",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 025."
+  },
+  {
+    "name": "FIRMWARE validation case 026",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-126",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 026."
+  },
+  {
+    "name": "PERFORMANCE validation case 027",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-127",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 027."
+  },
+  {
+    "name": "NVME validation case 028",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-128",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 028."
+  },
+  {
+    "name": "THERMAL validation case 029",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-129",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 029."
+  },
+  {
+    "name": "POWER validation case 030",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-130",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 030."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 031",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-131",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 031."
+  },
+  {
+    "name": "THERMAL validation case 032",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-132",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 032."
+  },
+  {
+    "name": "PERFORMANCE validation case 033",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-133",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 033."
+  },
+  {
+    "name": "THERMAL validation case 034",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-134",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 034."
+  },
+  {
+    "name": "POWER validation case 035",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-135",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 035."
+  },
+  {
+    "name": "THERMAL validation case 036",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-136",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 036."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 037",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-137",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 037."
+  },
+  {
+    "name": "FIRMWARE validation case 038",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-138",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 038."
+  },
+  {
+    "name": "POWER validation case 039",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-139",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 039."
+  },
+  {
+    "name": "FIRMWARE validation case 040",
+    "kind": "metric_min",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-140",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 040."
+  },
+  {
+    "name": "POWER validation case 041",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-141",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 041."
+  },
+  {
+    "name": "PERFORMANCE validation case 042",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-142",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 042."
+  },
+  {
+    "name": "PERFORMANCE validation case 043",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-143",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 043."
+  },
+  {
+    "name": "PCIE validation case 044",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-144",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 044."
+  },
+  {
+    "name": "NVME validation case 045",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-145",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 045."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 046",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-146",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 046."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 047",
+    "kind": "metric_min",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-147",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 047."
+  },
+  {
+    "name": "THERMAL validation case 048",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-148",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 048."
+  },
+  {
+    "name": "THERMAL validation case 049",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-149",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 049."
+  },
+  {
+    "name": "PCIE validation case 050",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-150",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 050."
+  },
+  {
+    "name": "PERFORMANCE validation case 051",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-151",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 051."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 052",
+    "kind": "metric_min",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-152",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 052."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 053",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-153",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 053."
+  },
+  {
+    "name": "POWER validation case 054",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-154",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 054."
+  },
+  {
+    "name": "PCIE validation case 055",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-155",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 055."
+  },
+  {
+    "name": "POWER validation case 056",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-156",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 056."
+  },
+  {
+    "name": "PERFORMANCE validation case 057",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-157",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 057."
+  },
+  {
+    "name": "FIRMWARE validation case 058",
+    "kind": "metric_min",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-158",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 058."
+  },
+  {
+    "name": "THERMAL validation case 059",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-159",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 059."
+  },
+  {
+    "name": "PCIE validation case 060",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-160",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 060."
+  },
+  {
+    "name": "PERFORMANCE validation case 061",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-161",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 061."
+  },
+  {
+    "name": "PCIE validation case 062",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-162",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 062."
+  },
+  {
+    "name": "PCIE validation case 063",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-163",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 063."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 064",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-164",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 064."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 065",
+    "kind": "metric_min",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-165",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 065."
+  },
+  {
+    "name": "THERMAL validation case 066",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-166",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 066."
+  },
+  {
+    "name": "NVME validation case 067",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-167",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 067."
+  },
+  {
+    "name": "PCIE validation case 068",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-168",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 068."
+  },
+  {
+    "name": "FIRMWARE validation case 069",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-169",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 069."
+  },
+  {
+    "name": "POWER validation case 070",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-170",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 070."
+  },
+  {
+    "name": "PCIE validation case 071",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-171",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 071."
+  },
+  {
+    "name": "POWER validation case 072",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-172",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 072."
+  },
+  {
+    "name": "THERMAL validation case 073",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-173",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 073."
+  },
+  {
+    "name": "PERFORMANCE validation case 074",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-174",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 074."
+  },
+  {
+    "name": "THERMAL validation case 075",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-175",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 075."
+  },
+  {
+    "name": "THERMAL validation case 076",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-176",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 076."
+  },
+  {
+    "name": "THERMAL validation case 077",
+    "kind": "metric_min",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-177",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 077."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 078",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-178",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 078."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 079",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-179",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 079."
+  },
+  {
+    "name": "POWER validation case 080",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-180",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 080."
+  },
+  {
+    "name": "FIRMWARE validation case 081",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-181",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 081."
+  },
+  {
+    "name": "PERFORMANCE validation case 082",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-182",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 082."
+  },
+  {
+    "name": "PERFORMANCE validation case 083",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-183",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 083."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 084",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-184",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 084."
+  },
+  {
+    "name": "THERMAL validation case 085",
+    "kind": "metric_min",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-185",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 085."
+  },
+  {
+    "name": "THERMAL validation case 086",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-186",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 086."
+  },
+  {
+    "name": "POWER validation case 087",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-187",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 087."
+  },
+  {
+    "name": "POWER validation case 088",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-188",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 088."
+  },
+  {
+    "name": "PCIE validation case 089",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-189",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 089."
+  },
+  {
+    "name": "POWER validation case 090",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-190",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 090."
+  },
+  {
+    "name": "THERMAL validation case 091",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-191",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 091."
+  },
+  {
+    "name": "THERMAL validation case 092",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-192",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 092."
+  },
+  {
+    "name": "PERFORMANCE validation case 093",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-193",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 093."
+  },
+  {
+    "name": "FIRMWARE validation case 094",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-194",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 094."
+  },
+  {
+    "name": "POWER validation case 095",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-195",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 095."
+  },
+  {
+    "name": "PCIE validation case 096",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-196",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 096."
+  },
+  {
+    "name": "PCIE validation case 097",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-197",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 097."
+  },
+  {
+    "name": "FIRMWARE validation case 098",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-198",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 098."
+  },
+  {
+    "name": "POWER validation case 099",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-199",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 099."
+  },
+  {
+    "name": "POWER validation case 100",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-200",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 100."
+  },
+  {
+    "name": "PCIE validation case 101",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-201",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 101."
+  },
+  {
+    "name": "THERMAL validation case 102",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-202",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 102."
+  },
+  {
+    "name": "NVME validation case 103",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-203",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 103."
+  },
+  {
+    "name": "PCIE validation case 104",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-204",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 104."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 105",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-205",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 105."
+  },
+  {
+    "name": "PERFORMANCE validation case 106",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-206",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 106."
+  },
+  {
+    "name": "PERFORMANCE validation case 107",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-207",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 107."
+  },
+  {
+    "name": "FIRMWARE validation case 108",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-208",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 108."
+  },
+  {
+    "name": "PCIE validation case 109",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-209",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 109."
+  },
+  {
+    "name": "NVME validation case 110",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-210",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 110."
+  },
+  {
+    "name": "THERMAL validation case 111",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-211",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 111."
+  },
+  {
+    "name": "THERMAL validation case 112",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-212",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 112."
+  },
+  {
+    "name": "FIRMWARE validation case 113",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-213",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 113."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 114",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-214",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 114."
+  },
+  {
+    "name": "PCIE validation case 115",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-215",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 115."
+  },
+  {
+    "name": "FIRMWARE validation case 116",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-216",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 116."
+  },
+  {
+    "name": "FIRMWARE validation case 117",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-217",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 117."
+  },
+  {
+    "name": "NVME validation case 118",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-218",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 118."
+  },
+  {
+    "name": "PCIE validation case 119",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-219",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 119."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 120",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-220",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 120."
+  },
+  {
+    "name": "PCIE validation case 121",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-221",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 121."
+  },
+  {
+    "name": "POWER validation case 122",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-222",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 122."
+  },
+  {
+    "name": "PCIE validation case 123",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-223",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 123."
+  },
+  {
+    "name": "FIRMWARE validation case 124",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-224",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 124."
+  },
+  {
+    "name": "NVME validation case 125",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-225",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 125."
+  },
+  {
+    "name": "PERFORMANCE validation case 126",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-226",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 126."
+  },
+  {
+    "name": "POWER validation case 127",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-227",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 127."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 128",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-228",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 128."
+  },
+  {
+    "name": "FIRMWARE validation case 129",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-229",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 129."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 130",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-230",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 130."
+  },
+  {
+    "name": "POWER validation case 131",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-231",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 131."
+  },
+  {
+    "name": "PCIE validation case 132",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-232",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 132."
+  },
+  {
+    "name": "PCIE validation case 133",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-233",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 133."
+  },
+  {
+    "name": "PCIE validation case 134",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-234",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 134."
+  },
+  {
+    "name": "PCIE validation case 135",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-235",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 135."
+  },
+  {
+    "name": "PERFORMANCE validation case 136",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-236",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 136."
+  },
+  {
+    "name": "POWER validation case 137",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-237",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 137."
+  },
+  {
+    "name": "PERFORMANCE validation case 138",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-238",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 138."
+  },
+  {
+    "name": "FIRMWARE validation case 139",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-239",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 139."
+  },
+  {
+    "name": "FIRMWARE validation case 140",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-240",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 140."
+  },
+  {
+    "name": "PCIE validation case 141",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-241",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 141."
+  },
+  {
+    "name": "PERFORMANCE validation case 142",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-242",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 142."
+  },
+  {
+    "name": "PCIE validation case 143",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-243",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 143."
+  },
+  {
+    "name": "FIRMWARE validation case 144",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-244",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 144."
+  },
+  {
+    "name": "PERFORMANCE validation case 145",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-245",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 145."
+  },
+  {
+    "name": "PERFORMANCE validation case 146",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-246",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 146."
+  },
+  {
+    "name": "POWER validation case 147",
+    "kind": "metric_min",
+    "subsystem": "power",
+    "requirement": "POWER-247",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 147."
+  },
+  {
+    "name": "NVME validation case 148",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-248",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 148."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 149",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-249",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 149."
+  },
+  {
+    "name": "PCIE validation case 150",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-250",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 150."
+  },
+  {
+    "name": "NVME validation case 151",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-251",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 151."
+  },
+  {
+    "name": "FIRMWARE validation case 152",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-252",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 152."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 153",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-253",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 153."
+  },
+  {
+    "name": "FIRMWARE validation case 154",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-254",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 154."
+  },
+  {
+    "name": "THERMAL validation case 155",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-255",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 155."
+  },
+  {
+    "name": "THERMAL validation case 156",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-256",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 156."
+  },
+  {
+    "name": "FIRMWARE validation case 157",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-257",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 157."
+  },
+  {
+    "name": "POWER validation case 158",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-258",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 158."
+  },
+  {
+    "name": "FIRMWARE validation case 159",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-259",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 159."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 160",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-260",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 160."
+  },
+  {
+    "name": "PERFORMANCE validation case 161",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-261",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 161."
+  },
+  {
+    "name": "THERMAL validation case 162",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-262",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 162."
+  },
+  {
+    "name": "THERMAL validation case 163",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-263",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 163."
+  },
+  {
+    "name": "THERMAL validation case 164",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-264",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 164."
+  },
+  {
+    "name": "PERFORMANCE validation case 165",
+    "kind": "metric_max",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-265",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 165."
+  },
+  {
+    "name": "NVME validation case 166",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-266",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 166."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 167",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-267",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 167."
+  },
+  {
+    "name": "PCIE validation case 168",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-268",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 168."
+  },
+  {
+    "name": "PERFORMANCE validation case 169",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-269",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 169."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 170",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-270",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 170."
+  },
+  {
+    "name": "PERFORMANCE validation case 171",
+    "kind": "metric_min",
+    "subsystem": "performance",
+    "requirement": "PERFORMANCE-271",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review performance telemetry, compare expected vs actual, and rerun case 171."
+  },
+  {
+    "name": "POWER validation case 172",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-272",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 172."
+  },
+  {
+    "name": "FIRMWARE validation case 173",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-273",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 173."
+  },
+  {
+    "name": "THERMAL validation case 174",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-274",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 174."
+  },
+  {
+    "name": "FIRMWARE validation case 175",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-275",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 175."
+  },
+  {
+    "name": "THERMAL validation case 176",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-276",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 176."
+  },
+  {
+    "name": "PCIE validation case 177",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-277",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 177."
+  },
+  {
+    "name": "FIRMWARE validation case 178",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-278",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 178."
+  },
+  {
+    "name": "NVME validation case 179",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-279",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 179."
+  },
+  {
+    "name": "PCIE validation case 180",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-280",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 180."
+  },
+  {
+    "name": "POWER validation case 181",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-281",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 181."
+  },
+  {
+    "name": "THERMAL validation case 182",
+    "kind": "metric_min",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-282",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 182."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 183",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-283",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 183."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 184",
+    "kind": "metric_min",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-284",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 184."
+  },
+  {
+    "name": "PCIE validation case 185",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-285",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 185."
+  },
+  {
+    "name": "FIRMWARE validation case 186",
+    "kind": "metric_min",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-286",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 186."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 187",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-287",
+    "metric": "write_latency_us_p99",
+    "expected": 1150,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 187."
+  },
+  {
+    "name": "NVME validation case 188",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-288",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 188."
+  },
+  {
+    "name": "THERMAL validation case 189",
+    "kind": "metric_min",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-289",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 189."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 190",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-290",
+    "metric": "io_error_rate_ppm",
+    "expected": 5,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 190."
+  },
+  {
+    "name": "PCIE validation case 191",
+    "kind": "metric_max",
+    "subsystem": "pcie",
+    "requirement": "PCIE-291",
+    "metric": "nand_program_us",
+    "expected": 640,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 191."
+  },
+  {
+    "name": "THERMAL validation case 192",
+    "kind": "metric_min",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-292",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 192."
+  },
+  {
+    "name": "NVME validation case 193",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-293",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 193."
+  },
+  {
+    "name": "FIRMWARE validation case 194",
+    "kind": "metric_max",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-294",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 194."
+  },
+  {
+    "name": "POWER validation case 195",
+    "kind": "metric_max",
+    "subsystem": "power",
+    "requirement": "POWER-295",
+    "metric": "pcie_retrain_count",
+    "expected": 0,
+    "triage": "Review power telemetry, compare expected vs actual, and rerun case 195."
+  },
+  {
+    "name": "FIRMWARE validation case 196",
+    "kind": "metric_min",
+    "subsystem": "firmware",
+    "requirement": "FIRMWARE-296",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review firmware telemetry, compare expected vs actual, and rerun case 196."
+  },
+  {
+    "name": "NVME validation case 197",
+    "kind": "metric_max",
+    "subsystem": "nvme",
+    "requirement": "NVME-297",
+    "metric": "read_latency_us_p99",
+    "expected": 950,
+    "triage": "Review nvme telemetry, compare expected vs actual, and rerun case 197."
+  },
+  {
+    "name": "DIAGNOSTICS validation case 198",
+    "kind": "metric_max",
+    "subsystem": "diagnostics",
+    "requirement": "DIAGNOSTICS-298",
+    "metric": "thermal_celsius_peak",
+    "expected": 78,
+    "triage": "Review diagnostics telemetry, compare expected vs actual, and rerun case 198."
+  },
+  {
+    "name": "PCIE validation case 199",
+    "kind": "metric_min",
+    "subsystem": "pcie",
+    "requirement": "PCIE-299",
+    "metric": "sustained_iops",
+    "expected": 88000,
+    "triage": "Review pcie telemetry, compare expected vs actual, and rerun case 199."
+  },
+  {
+    "name": "THERMAL validation case 200",
+    "kind": "metric_max",
+    "subsystem": "thermal",
+    "requirement": "THERMAL-300",
+    "metric": "firmware_boot_ms",
+    "expected": 500,
+    "triage": "Review thermal telemetry, compare expected vs actual, and rerun case 200."
   }
 ]
